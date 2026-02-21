@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+#issueTrackerURL = ""
+license = "All rights reserved."
+
+[[mods]]
+modId = "quasar_client"
+version = "${version}"
+displayName = "Quasar Client Companion"
+authors = "anar4732"
+description = '''
+An optional client-side mod that provides various quality-of-life features and enhancements for CDU players.
+'''
+logoFile = "assets/quasar_client/icon.png"
+
+[[dependencies.quasar_client]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.quasar_client]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.quasar_client]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"
