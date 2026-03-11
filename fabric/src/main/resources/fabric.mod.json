@@ -1,31 +1,32 @@
 {
-  "schemaVersion": 1,
-  "id": "quasar_client",
-  "version": "${version}",
-  "name": "Quasar Client Companion",
-  "description": "An optional client-side mod that provides various quality-of-life features and enhancements for CDU players.",
-  "authors": [
-    "anar4732"
-  ],
-  "contact": {
-    "homepage": "https://portfolio.mc.anar4732.dev"
-  },
-  "license": "All rights reserved.",
-  "icon": "assets/quasar_client/icon.png",
-  "environment": "client",
-  "entrypoints": {
-    "client": [
-        "net.anar4732.quasarClient.fabric.QCompanionModFabric"
-    ]
-  },
-  "mixins": [
-    "quasar_client.mixins.json"
-  ],
-  "depends": {
-    "fabricloader": ">=0.18.4",
-    "minecraft": "~1.20.1",
-    "java": ">=17",
-    "architectury": ">=9.2.14",
-    "fabric-api": "*"
-  }
+    "schemaVersion": 1,
+    "id": "quasar_client",
+    "version": "${version}",
+    "name": "Quasar Client Companion",
+    "description": "An optional client-side mod that provides various quality-of-life features and enhancements for CDU players.",
+    "authors": [
+        "anar4732"
+    ],
+    "contact": {
+        "homepage": "https://portfolio.mc.anar4732.dev"
+    },
+    "license": "All rights reserved.",
+    "icon": "assets/quasar_client/icon.png",
+    "environment": "client",
+    "_accessWidener": "quasar_client.accesswidener",
+    "entrypoints": {
+        "client": [
+            "anar4732.quasar.client.fabric.QCompanionModFabric"
+        ]
+    },
+    "mixins": [
+        "quasar_client.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.18.4",
+        "minecraft": "~1.20.1",
+        "java": ">=17",
+        "architectury": ">=9.2.14",
+        "fabric-api": "*"
+    }
 }

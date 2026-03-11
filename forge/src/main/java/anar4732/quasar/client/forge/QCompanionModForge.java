@@ -1,7 +1,7 @@
-package net.anar4732.quasarClient.forge;
+package anar4732.quasar.client.forge;
 
+import anar4732.quasar.client.QCompanionMod;
 import dev.architectury.platform.forge.EventBuses;
-import net.anar4732.quasarClient.QCompanionMod;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 

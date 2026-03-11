@@ -1,6 +1,6 @@
-package net.anar4732.quasarClient.fabric;
+package anar4732.quasar.client.fabric;
 
-import net.anar4732.quasarClient.QCompanionMod;
+import anar4732.quasar.client.QCompanionMod;
 import net.fabricmc.api.ClientModInitializer;
 
 public final class QCompanionModFabric implements ClientModInitializer {

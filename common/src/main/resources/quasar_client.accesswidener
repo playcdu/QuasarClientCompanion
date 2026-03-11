@@ -1,0 +1,22 @@
+accessWidener   v2  named
+accessible field net/minecraft/client/gui/Gui chat Lnet/minecraft/client/gui/components/ChatComponent;
+mutable field net/minecraft/client/gui/Gui chat Lnet/minecraft/client/gui/components/ChatComponent;
+accessible method net/minecraft/client/gui/components/ChatComponent isChatHidden ()Z
+accessible field net/minecraft/client/gui/components/ChatComponent trimmedMessages Ljava/util/List;
+accessible method net/minecraft/client/gui/components/ChatComponent isChatFocused ()Z
+extendable method net/minecraft/client/gui/components/ChatComponent isChatFocused ()Z
+accessible method net/minecraft/client/gui/components/ChatComponent getMessageEndIndexAt (DD)I
+accessible method net/minecraft/client/gui/components/ChatComponent screenToChatX (D)D
+accessible method net/minecraft/client/gui/components/ChatComponent screenToChatY (D)D
+accessible field net/minecraft/client/gui/components/ChatComponent minecraft Lnet/minecraft/client/Minecraft;
+accessible method net/minecraft/client/gui/components/ChatComponent getLineHeight ()I
+accessible field net/minecraft/client/gui/components/ChatComponent chatScrollbarPos I
+accessible method net/minecraft/client/gui/components/ChatComponent getTimeFactor (I)D
+accessible method net/minecraft/client/gui/components/ChatComponent getTagIconLeft (Lnet/minecraft/client/GuiMessage$Line;)I
+accessible method net/minecraft/client/gui/components/ChatComponent drawTagIcon (Lnet/minecraft/client/gui/GuiGraphics;IILnet/minecraft/client/GuiMessageTag$Icon;)V
+accessible field net/minecraft/client/gui/components/ChatComponent newMessageSinceScroll Z
+accessible field net/minecraft/client/gui/components/ChatComponent allMessages Ljava/util/List;
+accessible field net/minecraft/client/gui/components/ChatComponent recentChat Ljava/util/List;
+accessible field net/minecraft/client/gui/components/ChatComponent messageDeletionQueue Ljava/util/List;
+accessible method net/minecraft/client/gui/components/ChatComponent getMessageLineIndexAt (DD)I
+accessible field net/minecraft/client/gui/components/Tooltip message Lnet/minecraft/network/chat/Component;

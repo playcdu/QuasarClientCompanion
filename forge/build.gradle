@@ -55,4 +55,6 @@ shadowJar {
 
 remapJar {
     inputFile.set shadowJar.archiveFile
+    atAccessWideners.add("quasar_client.accesswidener")
+    archiveClassifier = "forge-${minecraft_version}"
 }

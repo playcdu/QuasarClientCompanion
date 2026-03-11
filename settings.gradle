@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'quasar_client'
+rootProject.name = 'quasar_companion'
 
 include 'common'
 include 'fabric'
