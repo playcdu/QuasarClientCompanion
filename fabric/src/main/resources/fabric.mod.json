@@ -10,7 +10,7 @@
     "contact": {
         "homepage": "https://portfolio.mc.anar4732.dev"
     },
-    "license": "All rights reserved.",
+    "license": "CC BY-NC-ND 4.0",
     "icon": "assets/quasar_client/icon.png",
     "environment": "client",
     "_accessWidener": "quasar_client.accesswidener",

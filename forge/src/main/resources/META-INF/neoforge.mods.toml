@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
 #issueTrackerURL = ""
-license = "All rights reserved."
+license = "CC BY-NC-ND 4.0"
 
 [[mods]]
 modId = "quasar_client"
