@@ -1,8 +1,6 @@
 package anar4732.quasar.client;
 
-import anar4732.quasar.api.QCChatChannel;
-import anar4732.quasar.api.QCPlayerMessage;
-import anar4732.quasar.api.QCompanionNetworkManager;
+import anar4732.quasar.api.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -36,10 +34,13 @@ public final class QCompanionMod {
 		CHAT_CHANNELS.clear();
 		selectedChannel = "*";
 		isAdmin = false;
+		QCompanionAPI.registryAccess = Minecraft.getInstance().getConnection().registryAccess();
 		
-		JsonObject o = QCompanionNetworkManager.createObject("init");
-		o.addProperty("version", VERSION);
-		QCompanionNetworkManager.sendMessage(o);
+		if (QExpectPlatform.shouldSendPacket()) {
+			JsonObject o = QCompanionNetworkManager.createObject("init");
+			o.addProperty("version", VERSION);
+			QCompanionNetworkManager.sendMessage(o);
+		}
 	}
 	
 	public static QCChatChannel getSelectedChannel() {

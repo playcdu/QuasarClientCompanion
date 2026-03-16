@@ -16,7 +16,7 @@ accessible method net/minecraft/client/gui/components/ChatComponent getTagIconLe
 accessible method net/minecraft/client/gui/components/ChatComponent drawTagIcon (Lnet/minecraft/client/gui/GuiGraphics;IILnet/minecraft/client/GuiMessageTag$Icon;)V
 accessible field net/minecraft/client/gui/components/ChatComponent newMessageSinceScroll Z
 accessible field net/minecraft/client/gui/components/ChatComponent allMessages Ljava/util/List;
-accessible field net/minecraft/client/gui/components/ChatComponent recentChat Ljava/util/List;
+accessible field net/minecraft/client/gui/components/ChatComponent recentChat Lnet/minecraft/util/ArrayListDeque;
 accessible field net/minecraft/client/gui/components/ChatComponent messageDeletionQueue Ljava/util/List;
 accessible method net/minecraft/client/gui/components/ChatComponent getMessageLineIndexAt (DD)I
 accessible field net/minecraft/client/gui/components/Tooltip message Lnet/minecraft/network/chat/Component;

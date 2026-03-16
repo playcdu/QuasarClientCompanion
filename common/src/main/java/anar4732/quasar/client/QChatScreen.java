@@ -76,7 +76,7 @@ public class QChatScreen extends ChatScreen {
 	}
 	
 	@Override
-	public boolean handleChatInput(String input, boolean addToRecentChat) {
+	public void handleChatInput(String input, boolean addToRecentChat) {
 		input = this.normalizeChatMessage(input);
 		if (!input.isEmpty()) {
 			if (addToRecentChat) {
@@ -91,7 +91,6 @@ public class QChatScreen extends ChatScreen {
 				this.minecraft.player.connection.sendCommand(QCompanionMod.getSelectedChannel().sendCommand.formatted(input).substring(1));
 			}
 		}
-		return true;
 	}
 	
 	@Override

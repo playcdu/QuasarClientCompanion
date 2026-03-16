@@ -53,7 +53,7 @@ public class QChatComponent extends ChatComponent {
 	}
 	
 	@Override
-	public void render(GuiGraphics guiGraphics, int tickCount, int mouseX, int mouseY) {
+	public void render(GuiGraphics guiGraphics, int tickCount, int mouseX, int mouseY, boolean b) {
 		if (!this.isChatHidden()) {
 			List<GuiMessage.Line> messages = messagesOfSelectedChannel();
 			this.messagesOfSelectedChannelSize = messages.size();
