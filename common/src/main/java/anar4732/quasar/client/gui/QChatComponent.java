@@ -1,6 +1,9 @@
-package anar4732.quasar.client;
+package anar4732.quasar.client.gui;
 
 import anar4732.quasar.api.QCPlayerMessage;
+import anar4732.quasar.client.QCompanionMod;
+import anar4732.quasar.client.util.ChatHeadsHook;
+import dev.architectury.platform.Platform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.GuiMessage;
@@ -28,7 +31,7 @@ public class QChatComponent extends ChatComponent {
 	
 	private List<GuiMessage.Line> messagesOfSelectedChannel() {
 		String channel = QCompanionMod.selectedChannel;
-		if (channel.equals("*")) {
+		if (channel.equals("*") || !QCompanionMod.shouldUseQChat()) {
 			return this.trimmedMessages;
 		}
 		
@@ -42,6 +45,10 @@ public class QChatComponent extends ChatComponent {
 		int w = Mth.floor(this.getWidth() / this.getScale());
 		
 		for (QCPlayerMessage m : messages) {
+			if (Platform.isModLoaded("chat_heads") && m.playerInfo != null) {
+				ChatHeadsHook.declareNextOwner(m);
+			}
+			
 			List<FormattedCharSequence> l = ComponentRenderUtils.wrapComponents(m.message, w, this.minecraft.font);
 			for (int j = 0; j < l.size(); j++) {
 				FormattedCharSequence formattedCharSequence = l.get(j);
@@ -54,6 +61,11 @@ public class QChatComponent extends ChatComponent {
 	
 	@Override
 	public void render(GuiGraphics guiGraphics, int tickCount, int mouseX, int mouseY, boolean b) {
+		if (!QCompanionMod.shouldUseQChat()) {
+			super.render(guiGraphics, tickCount, mouseX, mouseY, b);
+			return;
+		}
+		
 		if (!this.isChatHidden()) {
 			List<GuiMessage.Line> messages = messagesOfSelectedChannel();
 			this.messagesOfSelectedChannelSize = messages.size();
@@ -74,10 +86,10 @@ public class QChatComponent extends ChatComponent {
 				int p = (int)Math.round(-8.0 * (lineSpacing + 1.0) + 4.0 * lineSpacing);
 				int lines = 0;
 				
-				for (int r = 0; r + this.chatScrollbarPos < Math.max(messages.size(), 100) && r < this.getLinesPerPage(); r++) {
+				for (int r = 0; r < this.getHeight() / (this.getLineHeight() * getScale()); r++) {
 					int s = r + this.chatScrollbarPos;
 					int u = (int)(255.0 * opacity);
-					int v = (int)(255.0 * (focused ? backgroundOpacity : 0.25));
+					int v = (int)(255.0 * (focused ? backgroundOpacity : backgroundOpacity * 0.5));
 					lines++;
 					if (u > 3) {
 						int y = maxHeight - r * lineHeight;
@@ -88,7 +100,13 @@ public class QChatComponent extends ChatComponent {
 						if (messages.size() > s) {
 							GuiMessage.Line line = messages.get(s);
 							guiGraphics.pose().translate(0.0F, 0.0F, 50.0F);
+							if (Platform.isModLoaded("chat_heads")) {
+								ChatHeadsHook.renderChatHead(guiGraphics, line, i, (float) opacity);
+							}
 							guiGraphics.drawString(this.minecraft.font, line.content(), 0, i, 0xffffff + (u << 24));
+							if (Platform.isModLoaded("chat_heads")) {
+								ChatHeadsHook.forgetRenderData();
+							}
 						}
 						guiGraphics.pose().popPose();
 					}
@@ -105,14 +123,28 @@ public class QChatComponent extends ChatComponent {
 				
 				// SCROLL BAR
 				if (focused && !messages.isEmpty()) {
-					int totalHeight = lines * lineHeight;
-					int pos = this.chatScrollbarPos * totalHeight / messagesSize - maxHeight;
-					int u = totalHeight * totalHeight / shownHeight;
-					if (totalHeight < shownHeight) {
-						int w = this.newMessageSinceScroll ? 0xcc3333 : 0xffffff;
+					int viewportHeight = lines * lineHeight;
+					
+					if (shownHeight > viewportHeight) {
+						int trackPadding = 2;
+						int trackTop = maxHeight - viewportHeight + trackPadding;
+						int trackBottom = maxHeight - trackPadding;
+						int trackHeight = Math.max(1, trackBottom - trackTop);
+						int maxScrollLines = Math.max(1, messagesSize - lines);
+						int thumbHeight = Mth.clamp(trackHeight * viewportHeight / shownHeight, 8, trackHeight);
+						int thumbTravel = trackHeight - thumbHeight;
+						int thumbOffset = this.chatScrollbarPos * thumbTravel / maxScrollLines;
+						int thumbBottom = Mth.clamp(trackBottom - thumbOffset, trackTop + thumbHeight, trackBottom);
+						int thumbTop = thumbBottom - thumbHeight;
+						int color = this.newMessageSinceScroll ? 0xFFCC3333 : 0xFFFFFFFF;
+						int barLeft = maxWidth - 3;
+						int barRight = maxWidth - 1;
+				
+						guiGraphics.pose().pushPose();
 						guiGraphics.pose().translate(0.0F, 0.0F, 50.0F);
-						guiGraphics.fill(maxWidth + 1, totalHeight, maxWidth + 3, maxHeight - 5, 0x55888888);
-						guiGraphics.fill(maxWidth + 1, -pos - 5, maxWidth + 3, -pos - u + 3, (w | 0xff << 24));
+						guiGraphics.fill(barLeft, trackTop, barRight, trackBottom, 0x55888888);
+						guiGraphics.fill(barLeft, thumbTop, barRight, thumbBottom, color);
+						guiGraphics.pose().popPose();
 					}
 				}
 				
@@ -124,11 +156,6 @@ public class QChatComponent extends ChatComponent {
 	@Override
 	public int getHeight() {
 		return getHeight(this.isChatFocused() ? this.minecraft.options.chatHeightFocused().get() : this.minecraft.options.chatHeightUnfocused().get()) - 40;
-	}
-	
-	@Override
-	public double getScale() {
-		return 0.75;
 	}
 	
 	@Override

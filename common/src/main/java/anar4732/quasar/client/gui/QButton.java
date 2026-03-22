@@ -1,4 +1,4 @@
-package anar4732.quasar.client;
+package anar4732.quasar.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

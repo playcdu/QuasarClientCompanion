@@ -1,6 +1,6 @@
 package anar4732.quasar.client.mixin;
 
-import anar4732.quasar.client.QChatComponent;
+import anar4732.quasar.client.gui.QChatComponent;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.ChatComponent;
 import org.spongepowered.asm.mixin.Mixin;

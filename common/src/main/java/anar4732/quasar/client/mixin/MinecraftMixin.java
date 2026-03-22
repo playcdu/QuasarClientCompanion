@@ -1,7 +1,7 @@
 package anar4732.quasar.client.mixin;
 
-import anar4732.quasar.client.QChatScreen;
 import anar4732.quasar.client.QCompanionMod;
+import anar4732.quasar.client.gui.QChatScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
