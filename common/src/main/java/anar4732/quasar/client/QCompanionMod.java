@@ -3,6 +3,9 @@ package anar4732.quasar.client;
 import anar4732.quasar.api.QCChatChannel;
 import anar4732.quasar.api.QCPlayerMessage;
 import anar4732.quasar.api.QCompanionNetworkManager;
+import anar4732.quasar.client.gui.QChatComponent;
+import anar4732.quasar.client.util.ChatHeadsHook;
+import anar4732.quasar.client.util.QAPIServerEntry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -13,7 +16,11 @@ import net.minecraft.network.chat.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public final class QCompanionMod {
     public static final String MOD_ID = "quasar_client";
@@ -32,14 +39,29 @@ public final class QCompanionMod {
 	public static String selectedChannel = "*";
 	public static boolean isAdmin = false;
 	
+	// SERVERS
+	public static final Set<QConfig.ServerEntry> SERVERS = new TreeSet<>(Comparator.comparing(e -> e.name));
+	
+	// OTHER
+	public static boolean firstInteraction = true;
+	
 	public static void onLogin() {
 		CHAT_CHANNELS.clear();
 		selectedChannel = "*";
 		isAdmin = false;
 		
-		JsonObject o = QCompanionNetworkManager.createObject("init");
-		o.addProperty("version", VERSION);
-		QCompanionNetworkManager.sendMessage(o);
+		if (QExpectPlatform.shouldSendPacket()) {
+			JsonObject o = QCompanionNetworkManager.createObject("init");
+			o.addProperty("version", VERSION);
+			o.addProperty("networkPlayersOnTabList", CONFIG.tabListConfig.showNetworkPlayers);
+			QCompanionNetworkManager.sendMessage(o);
+		}
+		
+		if (Platform.isDevelopmentEnvironment()) {
+			for (int i = 0; i < 100; i++) {
+				Minecraft.getInstance().player.sendSystemMessage(Component.literal("Test message " + i));
+			}
+		}
 	}
 	
 	public static QCChatChannel getSelectedChannel() {
@@ -47,7 +69,7 @@ public final class QCompanionMod {
 	}
 	
 	public static boolean shouldUseQChat() {
-		return !QCompanionMod.CHAT_CHANNELS.isEmpty();
+		return !QCompanionMod.CHAT_CHANNELS.isEmpty() && QCompanionMod.CONFIG.chatConfig.useQChat;
 	}
 	
 	private static void newChannel(Collection<QCChatChannel> list) {
@@ -99,6 +121,38 @@ public final class QCompanionMod {
 					qchat.scrollChat(1);
 				}
 			}
+			
+			if (Platform.isModLoaded("chat_heads")) {
+				ChatHeadsHook.handleAddedChannelMessage(message);
+			}
 		});
+		
+		// ==================================================================================================== //
+	    
+	    SERVERS.addAll(QCompanionMod.CONFIG.modPackConfig.servers);
+		if (!CONFIG.modPackConfig.clusterName.isEmpty()) {
+		    CompletableFuture.runAsync(() -> {
+		        try {
+		            HttpURLConnection conn = (HttpURLConnection) new URL("https://api.playcdu.co/configs").openConnection();
+		            conn.setRequestMethod("GET");
+		            conn.setConnectTimeout(5000);
+		            conn.setReadTimeout(5000);
+		            try (InputStreamReader reader = new InputStreamReader(conn.getInputStream())) {
+		                JsonObject response = GSON.fromJson(reader, JsonObject.class);
+						if (response.has("data")) {
+							Set<QAPIServerEntry> servers = GSON.fromJson(response.get("data"), new TypeToken<Set<QAPIServerEntry>>(){}.getType());
+							for (QAPIServerEntry server : servers) {
+								if (server.cluster_name.equalsIgnoreCase(CONFIG.modPackConfig.clusterName)) {
+									SERVERS.add(new QConfig.ServerEntry(server.modpack_full_name + " [" + server.region_name + "]", server.server_address));
+								}
+							}
+						}
+		            }
+		            conn.disconnect();
+		        } catch (Exception e) {
+		            LOGGER.error("Failed to fetch config from API", e);
+		        }
+		    });
+		}
     }
 }

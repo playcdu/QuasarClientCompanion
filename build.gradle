@@ -1,5 +1,5 @@
 plugins {
-    id 'dev.architectury.loom' version '1.11-SNAPSHOT' apply false
+    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.gradleup.shadow' version '8.3.6' apply false
 }
@@ -26,6 +26,17 @@ subprojects {
             name = 'ParchmentMC'
             url = 'https://maven.parchmentmc.org'
         }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = "https://api.modrinth.com/maven"
+                }
+            }
+            filter {
+                includeGroup "maven.modrinth"
+            }
+        }
     }
 
     loom {
@@ -39,6 +50,9 @@ subprojects {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
         }
+
+        // https://modrinth.com/mod/chat-heads/versions
+        modCompileOnly "maven.modrinth:chat-heads:86yH2lgJ"
     }
 
     java {

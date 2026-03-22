@@ -6,7 +6,11 @@
     "client": [
         "ClientPacketListenerMixin",
         "GuiMixin",
-        "MinecraftMixin"
+        "JoinMultiplayerScreenMixin",
+        "MinecraftMixin",
+        "OptionsScreenMixin",
+        "ServerSelectionListMixin",
+        "TitleScreenMixin"
     ],
     "injectors": {
         "defaultRequire": 1

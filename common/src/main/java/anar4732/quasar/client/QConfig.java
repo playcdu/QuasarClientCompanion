@@ -55,5 +55,45 @@ public class QConfig implements Serializable {
 	
 	// ==================================================================================================== //
 	
+	public ModPackConfig modPackConfig = new ModPackConfig();
+	public ChatConfig chatConfig = new ChatConfig();
+	public TabListConfig tabListConfig = new TabListConfig();
 	public Set<String> collapsedTabs = new HashSet<>();
+	
+	// ==================================================================================================== //
+	
+	public static class ModPackConfig implements Serializable {
+		public String clusterName = "MAYV";
+		public String serversTitle = "Craft Down Under";
+		public String welcomeTitle = "Welcome to §6§lCraft Down Under§r§f!";
+		public String welcomeMessage = "Use code §6§l4732§r§f to get 15% off purchases on CDU store!";
+		public Set<ServerEntry> servers = new HashSet<>(
+				Set.of(
+						new ServerEntry("Example Server 1", "play.mayv.com"),
+						new ServerEntry("Example Server 2", "play.craftdownunder.com")
+				)
+		);
+	}
+	
+	public static class ServerEntry implements Serializable {
+		public String name;
+		public String address;
+		
+		public ServerEntry() {
+			// For GSON
+		}
+		
+		public ServerEntry(String name, String address) {
+			this.name = name;
+			this.address = address;
+		}
+	}
+	
+	public static class ChatConfig implements Serializable {
+		public boolean useQChat = true;
+	}
+	
+	public static class TabListConfig implements Serializable {
+		public boolean showNetworkPlayers = true;
+	}
 }

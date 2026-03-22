@@ -1,7 +1,8 @@
-package anar4732.quasar.client;
+package anar4732.quasar.client.gui;
 
 import anar4732.quasar.api.QCChatChannel;
 import anar4732.quasar.api.QCompanionNetworkManager;
+import anar4732.quasar.client.QCompanionMod;
 import com.google.gson.JsonObject;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -13,6 +14,7 @@ import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -32,11 +34,11 @@ public class QChatScreen extends ChatScreen {
 	protected void init() {
 		super.init();
 		int x = 3;
-		int y = this.height - chat.getHeight() - 12;
+		int y = Mth.ceil((this.height - 40) - (double)(chat.getLinesPerPage() * chat.getLineHeight()) - 20 + (9 - chat.getLineHeight()));
 		int i = 0;
 		QButton everythingButton;
 		Minecraft mc = this.minecraft;
-		this.addRenderableWidget(everythingButton = new QButton(x, this.height - chat.getHeight() - 12, 10, 10, Component.literal("§8*"), button -> {
+		this.addRenderableWidget(everythingButton = new QButton(x, y, 10, 10, Component.literal("§8*"), button -> {
 			QCompanionMod.selectedChannel = "*";
 			mc.setScreen(new QChatScreen(""));
 		}).setSelected(QCompanionMod.selectedChannel.equals("*")));
