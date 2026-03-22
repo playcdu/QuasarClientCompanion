@@ -20,3 +20,4 @@ accessible field net/minecraft/client/gui/components/ChatComponent recentChat Lj
 accessible field net/minecraft/client/gui/components/ChatComponent messageDeletionQueue Ljava/util/List;
 accessible method net/minecraft/client/gui/components/ChatComponent getMessageLineIndexAt (DD)I
 accessible field net/minecraft/client/gui/components/Tooltip message Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/OptionsScreen lastScreen Lnet/minecraft/client/gui/screens/Screen;

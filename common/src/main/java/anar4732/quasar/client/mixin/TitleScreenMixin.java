@@ -21,7 +21,7 @@ public class TitleScreenMixin {
 			if (!title.isEmpty()) {
 				QCompanionMod.LOGGER.info("Displaying welcome message with title '{}' and message '{}'", title, message);
 				Minecraft mc = Minecraft.getInstance();
-				mc.execute(() -> SystemToast.add(mc.getToasts(), SystemToast.SystemToastId.PERIODIC_NOTIFICATION, Component.literal(title), Component.literal(message)));
+				mc.execute(() -> SystemToast.add(mc.getToasts(), SystemToast.SystemToastIds.PERIODIC_NOTIFICATION, Component.literal(title), Component.literal(message)));
 			}
 		}
 	}

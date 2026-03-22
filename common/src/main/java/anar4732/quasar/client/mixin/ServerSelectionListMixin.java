@@ -25,15 +25,15 @@ public abstract class ServerSelectionListMixin extends ObjectSelectionList<Serve
 	@Unique
 	private static final CDUHeader CDU_HEADER = new CDUHeader();
 	
-	protected ServerSelectionListMixin(Minecraft minecraft, int i, int j, int k, int l) {
-		super(minecraft, i, j, k, l);
+	public ServerSelectionListMixin(Minecraft minecraft, int i, int j, int k, int l, int m) {
+		super(minecraft, i, j, k, l, m);
 	}
 	
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/multiplayer/ServerSelectionList;clearEntries()V", shift = At.Shift.AFTER), method = "refreshEntries")
 	public void addQEntries(CallbackInfo cir) {
 		this.addEntry(CDU_HEADER);
 		QCompanionMod.SERVERS.forEach(serverEntry -> {
-			ServerData data = new ServerData(serverEntry.name, serverEntry.address, ServerData.Type.OTHER);
+			ServerData data = new ServerData(serverEntry.name, serverEntry.address, false);
 			this.addEntry(new CDUOnlineServerEntry((ServerSelectionList) (Object) this, screen, data));
 		});
 	}

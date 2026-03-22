@@ -52,7 +52,7 @@ subprojects {
         }
 
         // https://modrinth.com/mod/chat-heads/versions
-        modCompileOnly "maven.modrinth:chat-heads:86yH2lgJ"
+        modCompileOnly "maven.modrinth:chat-heads:Nfb15p2T"
     }
 
     java {

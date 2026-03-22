@@ -62,7 +62,7 @@ public class QChatComponent extends ChatComponent {
 	@Override
 	public void render(GuiGraphics guiGraphics, int tickCount, int mouseX, int mouseY) {
 		if (!QCompanionMod.shouldUseQChat()) {
-			super.render(guiGraphics, tickCount, mouseX, mouseY, b);
+			super.render(guiGraphics, tickCount, mouseX, mouseY);
 			return;
 		}
 		
